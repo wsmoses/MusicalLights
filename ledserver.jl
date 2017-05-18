@@ -16,6 +16,7 @@ function clearLights(ledstrip)
     for i in 1:LED_COUNT
         setColorRGB(ledstrip, i, 0,0,0)
     end
+    ledstrip[:show]()
 end
 function serverInfo()
     #=
