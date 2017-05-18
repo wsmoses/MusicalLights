@@ -53,14 +53,14 @@ function parseAndUpdate(ledstrip, tData::Array{UInt8,1})
     println("Test 1")
     rawData = convert.(UInt32, tData)
     @show rawData
-    dataRange = 1:6:length(rawData)
+    dataRange = 1:3:length(rawData)
     output = zeros(length(dataRange))
     println("Test 1.5")
     for i in dataRange
-        vals = rawData[i:i+6]
-        val1 = vals[1]*16 + vals[2]
-        val2 = vals[3]*16 + vals[4]
-        val3 = vals[5]*16 + vals[6]
+        vals = rawData[i:i+2]
+        val1 = vals[1]
+        val2 = vals[2]
+        val3 = vals[3]
         @show i
         #val2 = convert(Int32, "0x"*rawData[3:4])
         #val3 = convert(Int32, "0x"*rawData[5:6])
