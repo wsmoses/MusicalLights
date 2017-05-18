@@ -98,7 +98,6 @@ function main()
         =#
         udpsock = UDPSocket()
         bind(udpsock,ip"0.0.0.0",8080)
-        send(udpsock,ip"10.42.0.1",8080, serverInfo())
         while true
             parseAndUpdate(ledstrip, recv(udpsock))
         end
