@@ -67,6 +67,7 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
 end
 function updateLEDs(ledstrip, ledData::Array{Array{UInt8, 1}, 1})
     for i in eachindex(ledData)
+        @show ledData[i]
         setColorRGB(ledstrip, i, ledData[i]...)
     end
     ledstrip[:show]()
