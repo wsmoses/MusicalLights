@@ -49,11 +49,11 @@ function serverInfo()
     package = [mac..., ip..., deviceType, protocolVersion, vID..., pID..., hRev..., sRev..., lSpeed...]
     return package
 end
-function parseAndUpdate(ledstrip, tData::Array{UInt8,1})
+function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
     println("Test 1")
-    rawData = convert.(UInt32, tData)
     @show rawData
     dataRange = 1:3:length(rawData)
+    println("Test 1.25")
     output = zeros(length(dataRange))
     println("Test 1.5")
     for i in dataRange
