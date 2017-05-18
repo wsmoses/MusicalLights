@@ -52,7 +52,7 @@ end
 function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
     println("Test 1")
     @show rawData
-    dataRange = 1:3:length(rawData)
+    dataRange = 1:3:length(rawData)-1
     println("Test 1.25")
     output = zeros(length(dataRange))
     println("Test 1.5")
@@ -65,6 +65,7 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
         #val2 = convert(Int32, "0x"*rawData[3:4])
         #val3 = convert(Int32, "0x"*rawData[5:6])
         output[i] = [val1, val2, val3]
+        println("Test 1.75")
     end
     println("Test 2")
     @show output
