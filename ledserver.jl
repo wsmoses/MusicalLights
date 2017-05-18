@@ -49,7 +49,7 @@ function serverInfo()
     package = [mac..., ip..., deviceType, protocolVersion, vID..., pID..., hRev..., sRev..., lSpeed...]
     return package
 end
-function parseAndUpdate(ledstrip, rawData)
+function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
     dataRange = 1:6:length(rawData)
     output = zeros(length(dataRange))
     for i in dataRange
@@ -98,7 +98,7 @@ function main()
         while true
             temp = recv(udpsock)
             println(temp)
-            parseAndUpdate(temp)
+            parseAndUpdate(ledstrip, temp)
         end
     catch ex
         println("Caught An Exception")
