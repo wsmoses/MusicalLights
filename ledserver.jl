@@ -77,6 +77,7 @@ function main()
         while true
             socket = accept(server)
             write(socket, serverInfo())
+            println(serverInfo())
             @async while isopen(socket)
                 parseAndUpdate(readline(socket))
             end
