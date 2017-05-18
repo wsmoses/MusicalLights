@@ -7,10 +7,8 @@ LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = false   # True to invert the signal (when using NPN transistor level shift)
 function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
-   iob = IOBuffer()
-   write(iob, x)
-   seekstart(iob)
-   return readbytes(iob)
+    bitstring = bits(x)
+    return [parse(UInt8, bitstring[i:i+7], 2) for i in 1:8:length(bitstring)]
 end
 function clearLights(ledstrip)
     setAllLightsRGB(ledstrip, 0,0,0)
@@ -34,9 +32,11 @@ function serverInfo()
     uint32_t link_speed;  // in bits per second
     =#
     macString = readstring(`cat /sys/class/net/eth0/address`)
-    ipString = readstring(`hostname -I`)
-    mac = [parse(UInt8, "0x"*macString[i:i+1]) for i in 1:3:18]
-    ip = [parse(UInt8, "0x"*ipString[i:i+1]) for i in 1:3:12]
+    ipString = split(readstring(`hostname -I`))[1]
+    macs = split(macString, ":")
+    mac = [parse(UInt8, "0x"*macs[i]) for i in eachindex(macs)]
+    ips = split(ipString, ".")
+    ip = [parse(UInt8, "0x"*ips[i]) for i in eachindex(ips)]
     deviceType::UInt8 = 0
     protocolVersion::UInt8 = 1
     vendorID::UInt16 = 1996
@@ -101,12 +101,12 @@ function main()
         =#
         udpsock = UDPSocket()
         bind(udpsock,ip"0.0.0.0",8080)
-        for i in 1:100
+        for i in 1:1000
             if i % 10 == 0
                 setAllLightsRGB(ledstrip, 255, 0,0)
             end
             send(udpsock, ip"10.42.0.1", 8080, serverInfo())
-            sleep(10)
+            sleep(0.010)
             clearLights()
         end
         while true
