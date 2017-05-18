@@ -54,7 +54,7 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
     @show rawData
     dataRange = 1:3:length(rawData)-1
     println("Test 1.25")
-    output = zeros(length(dataRange))
+    output = [zeros(UInt8,3) for i in 1:length(dataRange)]
     println("Test 1.5")
     j=0
     for i in dataRange
