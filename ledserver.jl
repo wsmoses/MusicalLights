@@ -50,12 +50,8 @@ function serverInfo()
     return package
 end
 function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
-    println("Test 1")
-    @show rawData
     dataRange = 1:3:length(rawData)-1
-    println("Test 1.25")
     output = [zeros(UInt8,3) for i in 1:length(dataRange)]
-    println("Test 1.5")
     j=0
     for i in dataRange
         vals = rawData[i:i+2]
@@ -63,18 +59,13 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
         val2 = vals[2]
         val3 = vals[3]
         j+=1
-        @show i
-        @show j
         #val2 = convert(Int32, "0x"*rawData[3:4])
         #val3 = convert(Int32, "0x"*rawData[5:6])
         output[j] = [val1, val2, val3]
-        println("Test 1.75")
     end
-    println("Test 2")
-    @show output
     updateLEDs(ledstrip, output)
 end
-function updateLEDs(ledstrip, ledData::Array{Array{Float32, 1}, 1})
+function updateLEDs(ledstrip, ledData::Array{Array{UInt8, 1}, 1})
     for i in eachindex(ledData)
         setColorRGB(ledstrip, i, ledData[i]...)
     end
