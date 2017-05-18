@@ -13,8 +13,11 @@ function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
    return readbytes(iob)
 end
 function clearLights(ledstrip)
+    setAllLightsRGB(ledstrip, 0,0,0)
+end
+function setAllLightsRGB(ledstrip, R, G, B)
     for i in 1:LED_COUNT
-        setColorRGB(ledstrip, i, 0,0,0)
+        setColorRGB(ledstrip, i, R,G,B)
     end
     ledstrip[:show]()
 end
@@ -67,7 +70,7 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
 end
 function updateLEDs(ledstrip, ledData::Array{Array{UInt8, 1}, 1})
     for i in eachindex(ledData)
-        ledstrip[:setPixelColorRGB](i-1, ledData[i][2], ledData[i][1], ledData[i][3])
+        setColorRGB(ledstrip, i, ledData[i]...)
         #setColorRGB(ledstrip, i, ledData[i]...)
     end
     ledstrip[:show]()
@@ -98,6 +101,14 @@ function main()
         =#
         udpsock = UDPSocket()
         bind(udpsock,ip"0.0.0.0",8080)
+        for i in 1:100
+            if i % 10 == 0
+                setAllLightsRGB(ledstrip, 255, 0,0)
+            end
+            send(udpsock, ip"10.42.0.1", 8080, serverInfo())
+            sleep(10)
+            clearLights()
+        end
         while true
             parseAndUpdate(ledstrip, recv(udpsock))
         end
