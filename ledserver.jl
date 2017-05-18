@@ -64,6 +64,7 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
         val3 = vals[3]
         j+=1
         @show i
+        @show j
         #val2 = convert(Int32, "0x"*rawData[3:4])
         #val3 = convert(Int32, "0x"*rawData[5:6])
         output[j] = [val1, val2, val3]
