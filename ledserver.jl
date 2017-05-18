@@ -5,7 +5,7 @@ LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
-LED_INVERT     = true    # True to invert the signal (when using NPN transistor level shift)
+LED_INVERT     = false   # True to invert the signal (when using NPN transistor level shift)
 function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
    iob = IOBuffer()
    write(iob, x)
