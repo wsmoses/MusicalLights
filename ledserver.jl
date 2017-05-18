@@ -85,9 +85,9 @@ function main()
     catch ex
         println("Caught An Exception")
         if isa(ex, InterruptException)
-            closeHardware()
             println("Program Terminated Successfully")
         end
     end
 end
+println("Server Listening on port 8080, use <Ctrl>-C to end the program.")
 main()
