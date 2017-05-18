@@ -91,15 +91,13 @@ function main()
             end
         end
         =#
-        @async begin
-         udpsock = UDPSocket()
-         bind(udpsock,ip"0.0.0.0",8080)
-         while true
-           temp = bytestring(recv(udpsock))
-           println(temp)
-           parseAndUpdate(temp)
-         end
-       end
+        udpsock = UDPSocket()
+        bind(udpsock,ip"0.0.0.0",8080)
+        while true
+            temp = recv(udpsock)
+            println(temp)
+            parseAndUpdate(temp)
+        end
     catch ex
         println("Caught An Exception")
         if isa(ex, InterruptException)
