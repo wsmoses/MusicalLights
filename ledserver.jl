@@ -1,6 +1,6 @@
 using PyCall;
 @pyimport neopixel
-function num2byteA{T<:Union(Float16, Float32, Float64, Signed, Unsigned)}(x::T)
+function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
    iob = IOBuffer()
    write(iob, x)
    seekstart(iob)
