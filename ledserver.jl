@@ -77,7 +77,7 @@ function openHardware()
     return ledstrip
 end
 function main()
-    server = listen(IPv4(0), 8080)
+    #server = listen(IPv4(0), 8080)
     ledstrip = openHardware()
     clearLights(ledstrip)
     try
