@@ -93,7 +93,7 @@ function main()
         =#
         @async begin
          udpsock = UDPSocket()
-         bind(udpsock,ip"127.0.0.1",8080)
+         bind(udpsock,ip"10.42.0.109",8080)
          while true
            parseAndUpdate(bytestring(recv(udpsock)))
          end
