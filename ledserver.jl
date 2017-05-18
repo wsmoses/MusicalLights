@@ -101,12 +101,12 @@ function main()
         =#
         udpsock = UDPSocket()
         bind(udpsock,ip"0.0.0.0",8080)
-        for i in 1:1000
-            if i % 10 == 0
+        for i in 1:10
+            if i % 1 == 0
                 setAllLightsRGB(ledstrip, 255, 0,0)
             end
             send(udpsock, ip"10.42.0.1", 8080, serverInfo())
-            sleep(0.010)
+            sleep(1)
             clearLights()
         end
         while true
