@@ -50,6 +50,8 @@ function serverInfo()
     return package
 end
 function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
+    println("Test 1")
+    @show rawData
     dataRange = 1:6:length(rawData)
     output = zeros(length(dataRange))
     for i in dataRange
@@ -61,6 +63,8 @@ function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
         #val3 = convert(Int32, "0x"*rawData[5:6])
         output[i] = [val1, val2, val3]
     end
+    println("Test 2")
+    @show output
     updateLEDs(ledstrip, output)
 end
 function updateLEDs(ledstrip, ledData::Array{Array{Float32, 1}, 1})
