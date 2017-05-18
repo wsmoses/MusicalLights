@@ -1,6 +1,6 @@
 using PyCall;
 @pyimport neopixel
-LED_COUNT      = 16      # Number of LED pixels.
+LED_COUNT      = 100      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
@@ -81,6 +81,7 @@ function main()
     ledstrip = openHardware()
     clearLights(ledstrip)
     try
+        #=
         while true
             socket = accept(server)
             write(socket, serverInfo())
@@ -89,6 +90,14 @@ function main()
                 parseAndUpdate(readline(socket))
             end
         end
+        =#
+        @async begin
+         udpsock = UDPSocket()
+         bind(udpsock,ip"127.0.0.1",8080)
+         while true
+           parseAndUpdate(bytestring(recv(udpsock)))
+         end
+       end
     catch ex
         println("Caught An Exception")
         if isa(ex, InterruptException)
