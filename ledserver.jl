@@ -100,6 +100,7 @@ function main()
         end
     catch ex
         println("Caught An Exception")
+        println(typeof(ex))
         if isa(ex, InterruptException)
             println("Program Terminated Successfully")
         end
