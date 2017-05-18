@@ -54,9 +54,11 @@ function parseAndUpdate(ledstrip, rawData)
     output = zeros(length(dataRange))
     for i in dataRange
         vals = rawData[i:i+5]
-        val1 = convert(Int32, "0x"*rawData[1:2])
-        val2 = convert(Int32, "0x"*rawData[3:4])
-        val3 = convert(Int32, "0x"*rawData[5:6])
+        val1 = rawData[1]*16 + rawData[2]
+        val2 = rawData[3]*16 + rawData[4]
+        val3 = rawData[5]*16 + rawData[6]
+        #val2 = convert(Int32, "0x"*rawData[3:4])
+        #val3 = convert(Int32, "0x"*rawData[5:6])
         output[i] = [val1, val2, val3]
     end
     updateLEDs(ledstrip, output)
