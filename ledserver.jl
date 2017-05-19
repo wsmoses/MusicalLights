@@ -49,7 +49,30 @@ function serverInfo()
     sRev = num2byteA(softwareRevision)
     linkSpeed::UInt32 = 100000000
     lSpeed = num2byteA(linkSpeed)
-    package = [mac..., ip..., deviceType, protocolVersion, vID..., pID..., hRev..., sRev..., lSpeed...]
+    headers = [mac..., ip..., deviceType, protocolVersion, vID..., pID..., hRev..., sRev..., lSpeed...]
+    strips_attached::UInt8 = 4
+    max_strips_per_packet::UInt8 = 4;
+    pixels_per_strip::UInt16 = 150;
+    # Microseconds
+    update_period::UInt32 = 100;
+    # PWM units
+    power_total::UInt32 = 200;
+    # Difference between received and expected sequence numbers
+    delta_sequence::UInt32 = 0;
+    # Ordering number for this controller
+    controller_ordinal::UInt32 = 1;
+    # Group number for this controller
+    group_ordinal::UInt32 = 1;
+    # Configured artnet starting point for this controller
+    artnet_universe::UInt16 = 1;
+    artnet_channel::UInt16 = 1;
+    my_port::UInt16 = 8080;
+    # Flags for each strip, up to 8 strips
+    strip_flags::Array{UInt8,1} = convert.(UInt8, ones(8));
+    pusher_flags::UInt32 = 0;
+    segments::UInt32 = 0;
+    info = [strips_attached, max_strips_per_packet, pixels_per_strip, update_period, power_total, delta_sequence, controller_ordinal, group_ordinal, artnet_universe, artnet_channel, my_port, strip_flags..., pusher_flags, segments]
+    package = [headers..., info...]
     return package
 end
 function parseAndUpdate(ledstrip, rawData::Array{UInt8,1})
