@@ -53,25 +53,37 @@ function serverInfo()
     strips_attached::UInt8 = 4
     max_strips_per_packet::UInt8 = 4;
     pixels_per_strip::UInt16 = 150;
+    pps = num2byteA(pixels_per_strip)
     # Microseconds
     update_period::UInt32 = 100;
+    updp = num2byteA(update_period)
     # PWM units
     power_total::UInt32 = 200;
+    pt = num2byteA(power_total)
     # Difference between received and expected sequence numbers
     delta_sequence::UInt32 = 0;
+    dseq = num2byteA(delta_sequence)
     # Ordering number for this controller
     controller_ordinal::UInt32 = 1;
+    conord = num2byteA(controller_ordinal)
     # Group number for this controller
     group_ordinal::UInt32 = 1;
+    groord = num2byteA(group_ordinal)
     # Configured artnet starting point for this controller
     artnet_universe::UInt16 = 1;
+    artUni = num2byteA(artnet_universe)
     artnet_channel::UInt16 = 1;
+    artChan = num2byteA(artnet_channel)
     my_port::UInt16 = 8080;
+    mp = num2byteA(my_port)
     # Flags for each strip, up to 8 strips
     strip_flags::Array{UInt8,1} = ones(UInt8, 8);
+    stfl = num2byteA(strip_flags)
     pusher_flags::UInt32 = 0;
+    pushfl = num2byteA(pusher_flags)
     segments::UInt32 = 0;
-    info = [strips_attached, max_strips_per_packet, pixels_per_strip, update_period, power_total, delta_sequence, controller_ordinal, group_ordinal, artnet_universe, artnet_channel, my_port, strip_flags..., pusher_flags, segments]
+    segs = num2byteA(segments)
+    info = [strips_attached, max_strips_per_packet, pps..., updp..., pt..., dseq..., conord..., groord..., artUni..., artChan..., mp...,stfl...,pushfl...,segs...]
     package = [headers..., info...]
     return package
 end
