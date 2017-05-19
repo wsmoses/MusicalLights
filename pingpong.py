@@ -8,6 +8,7 @@ sock = socket.socket(socket.AF_INET, # Internet
 llen = 300
 speed = 5
 
+
 test = [255, 0, 0] + [0]*3*(llen-1)
 test_hex = ''.join('{:02x}'.format(x) for x in test)
 sock.sendto(bytes.fromhex(test_hex), (UDP_IP, UDP_PORT))

@@ -108,7 +108,7 @@ function main()
             end
             send(udpsock, ip"10.42.0.1", 8080, serverInfo())
             sleep(0.5)
-            clearLights()
+            clearLights(ledstrip)
         end
         while true
             parseAndUpdate(ledstrip, recv(udpsock))
