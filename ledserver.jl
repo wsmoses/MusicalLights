@@ -68,7 +68,7 @@ function serverInfo()
     artnet_channel::UInt16 = 1;
     my_port::UInt16 = 8080;
     # Flags for each strip, up to 8 strips
-    strip_flags::Array{UInt8,1} = convert.(UInt8, ones(8));
+    strip_flags::Array{UInt8,1} = ones(UInt8, 8);
     pusher_flags::UInt32 = 0;
     segments::UInt32 = 0;
     info = [strips_attached, max_strips_per_packet, pixels_per_strip, update_period, power_total, delta_sequence, controller_ordinal, group_ordinal, artnet_universe, artnet_channel, my_port, strip_flags..., pusher_flags, segments]
