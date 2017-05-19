@@ -78,12 +78,11 @@ function serverInfo()
     mp = num2byteA(my_port)
     # Flags for each strip, up to 8 strips
     strip_flags::Array{UInt8,1} = ones(UInt8, 8);
-    stfl = num2byteA(strip_flags)
     pusher_flags::UInt32 = 0;
     pushfl = num2byteA(pusher_flags)
     segments::UInt32 = 0;
     segs = num2byteA(segments)
-    info = [strips_attached, max_strips_per_packet, pps..., updp..., pt..., dseq..., conord..., groord..., artUni..., artChan..., mp...,stfl...,pushfl...,segs...]
+    info = [strips_attached, max_strips_per_packet, pps..., updp..., pt..., dseq..., conord..., groord..., artUni..., artChan..., mp...,strip_flags...,pushfl...,segs...]
     package = [headers..., info...]
     return package
 end
