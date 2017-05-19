@@ -111,7 +111,9 @@ function main()
             clearLights(ledstrip)
         end
         while true
-            parseAndUpdate(ledstrip, recv(udpsock))
+            temp = recv(udpsock)
+            @show temp
+            parseAndUpdate(ledstrip, temp)
         end
     catch ex
         println("Caught An Exception")
