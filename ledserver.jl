@@ -1,15 +1,11 @@
 using PyCall;
 @pyimport neopixel
-LED_COUNT      = 300      # Number of LED pixels.
+LED_COUNT      = 600     # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = false   # True to invert the signal (when using NPN transistor level shift)
-function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
-    bitstring = bits(x)
-    return [parse(UInt8, bitstring[i:i+7], 2) for i in 1:8:length(bitstring)]
-end
 function clearLights(ledstrip)
     setAllLightsRGB(ledstrip, 0,0,0)
 end
@@ -18,6 +14,10 @@ function setAllLightsRGB(ledstrip, R, G, B)
         setColorRGB(ledstrip, i, R,G,B)
     end
     ledstrip[:show]()
+end
+function num2byteA{T<:Union{Float16, Float32, Float64, Signed, Unsigned}}(x::T)
+    bitstring = bits(x)
+    return [parse(UInt8, bitstring[i:i+7], 2) for i in 1:8:length(bitstring)]
 end
 function serverInfo()
     #=
@@ -34,9 +34,9 @@ function serverInfo()
     macString = readstring(`cat /sys/class/net/eth0/address`)
     ipString = split(readstring(`hostname -I`))[1]
     macs = split(macString, ":")
-    mac = [parse(UInt8, "0x"*macs[i]) for i in eachindex(macs)]
+    mac = [parse(UInt8, macs[i], 16) for i in eachindex(macs)]
     ips = split(ipString, ".")
-    ip = [parse(UInt8, "0x"*ips[i]) for i in eachindex(ips)]
+    ip = [parse(UInt8, ips[i], 10) for i in eachindex(ips)]
     deviceType::UInt8 = 0
     protocolVersion::UInt8 = 1
     vendorID::UInt16 = 1996
@@ -107,7 +107,7 @@ function main()
                 setAllLightsRGB(ledstrip, 255, 0,0)
             end
             send(udpsock, ip"10.42.0.1", 8080, serverInfo())
-            sleep(1)
+            sleep(0.5)
             clearLights()
         end
         while true
