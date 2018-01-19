@@ -5,7 +5,7 @@ UDP_IP="10.42.0.109"
 UDP_PORT = 8080
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
-llen = 300
+llen = 600
 speed = 5
 
 
